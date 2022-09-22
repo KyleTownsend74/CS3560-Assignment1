@@ -1,5 +1,7 @@
 import question.IQuestion;
 import question.Question;
+import student.IStudent;
+import student.Student;
 import vote.IVoteService;
 import vote.VoteService;
 
@@ -15,13 +17,15 @@ public class SimulationDriver {
         // TODO: Add question to service
         IVoteService voteService = new VoteService(q1);
         System.out.println(voteService.getQuestionInfo());
-        voteService.submitAnswer(0);
-        voteService.submitAnswer(1);
-        voteService.submitAnswer(1);
-        voteService.submitAnswer(1);
-        System.out.println(voteService.getSubmissionInfo());
 
         // TODO: Randomly generate students and their answers
+        IStudent s1 = new Student();
+        IStudent s2 = new Student();
+        voteService.submitAnswer(s1, 1);
+        voteService.submitAnswer(s1, 1);
+        voteService.submitAnswer(s2, 1);
+        voteService.submitAnswer(s2, 0);
+        System.out.println(voteService.getSubmissionInfo());
 
         // TODO: Submit answers to service
 
