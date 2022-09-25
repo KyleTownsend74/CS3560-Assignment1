@@ -3,7 +3,11 @@ package question;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Question implements IQuestion {
+public abstract class Question implements IQuestion {
+
+    public enum QType {
+        SINGLE_CHOICE, MULTIPLE_CHOICE
+    }
 
     private String question;
     private List<String> answers;

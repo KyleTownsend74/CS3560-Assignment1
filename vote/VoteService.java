@@ -1,16 +1,19 @@
 package vote;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import question.IQuestion;
+import question.Question.QType;
 import student.IStudent;
 
 public class VoteService implements IVoteService {
     
     private IQuestion curQuestion;
     private int[] answerSubmissions;
-    private Map<Integer, Integer> submittedStudents;
+    private Map<Integer, List<Integer>> submittedStudents;
 
     public VoteService(IQuestion curQuestion) {
         this.curQuestion = curQuestion;
@@ -25,15 +28,45 @@ public class VoteService implements IVoteService {
 
     // Returns true if answer successfully submitted, false otherwise
     @Override
-    public boolean submitAnswer(IStudent student, int answerNum) {
-        if(answerNum >= 0 && answerNum < answerSubmissions.length) {
+    public boolean submitAnswer(IStudent student, int... answerNums) {
+        if(answerNums.length > 0) {
+            // Keep track of answers checked while validating input
+            List<Integer> answerNumsChecked = new ArrayList<>();
+
+            // Validate input
+            for(int curAnswerNum : answerNums) {
+                if(curAnswerNum < 0 
+                        || curAnswerNum >= answerSubmissions.length 
+                        || answerNumsChecked.contains(curAnswerNum)) {
+
+                    return false;
+                }
+
+                answerNumsChecked.add(curAnswerNum);
+            }
+
+            int studentId = student.getId();
+
             // If the student already submitted an answer, get rid of the old submission
-            if(submittedStudents.containsKey(student.getId())) {
-                answerSubmissions[submittedStudents.get(student.getId())]--;
+            if(submittedStudents.containsKey(studentId)) {
+                for(int curOldAnswer : submittedStudents.get(studentId)) {
+                    answerSubmissions[curOldAnswer]--;
+                }
             }
             
-            answerSubmissions[answerNum]++;
-            submittedStudents.put(student.getId(), answerNum);
+            // Submit the answers. If single choice question and multiple
+            // answers were submitted, only use the first answer passed in
+            if(curQuestion.getQuestionType() == QType.SINGLE_CHOICE) {
+                answerSubmissions[answerNums[0]]++;
+            }
+            else {
+                for(int curAnswerNum : answerNums) {
+                    answerSubmissions[curAnswerNum]++;
+                }
+            }
+
+            // Keep track of what answers the student submitted
+            submittedStudents.put(studentId, answerNumsChecked);
             
             return true;
         }
