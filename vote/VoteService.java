@@ -16,14 +16,16 @@ public class VoteService implements IVoteService {
     private Map<Integer, List<Integer>> submittedStudents;
 
     public VoteService(IQuestion curQuestion) {
-        this.curQuestion = curQuestion;
-        answerSubmissions = new int[curQuestion.getAnswers().length];
-        submittedStudents = new HashMap<>();
+        setCurQuestion(curQuestion);
     }
 
     @Override
     public void setCurQuestion(IQuestion curQuestion) {
         this.curQuestion = curQuestion;
+
+        // Question is changed, so reset (or set up) the state of the VoteService
+        answerSubmissions = new int[curQuestion.getAnswers().length];
+        submittedStudents = new HashMap<>();
     }
 
     // Returns true if answer successfully submitted, false otherwise
