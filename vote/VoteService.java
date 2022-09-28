@@ -28,6 +28,11 @@ public class VoteService implements IVoteService {
         submittedStudents = new HashMap<>();
     }
 
+    @Override
+    public IQuestion getCurQuestion() {
+        return curQuestion;
+    }
+
     // Returns true if answer successfully submitted, false otherwise
     @Override
     public boolean submitAnswer(IStudent student, int... answerNums) {
