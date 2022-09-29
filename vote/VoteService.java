@@ -87,11 +87,24 @@ public class VoteService implements IVoteService {
     }
 
     @Override
-    public String getSubmissionInfo() {
+    public String getAnswerInfo() {
         String info = "";
+        char curChar = 'A';
 
         for(int i = 0; i < answerSubmissions.length; i++) {
-            info += curQuestion.getAnswers()[i] + " : " + answerSubmissions[i] + "\n";
+            info += curChar++ + ". " + curQuestion.getAnswers()[i] + "\n";
+        }
+        
+        return info;
+    }
+
+    @Override
+    public String getSubmissionInfo() {
+        String info = "";
+        char curChar = 'A';
+
+        for(int i = 0; i < answerSubmissions.length; i++) {
+            info += curChar++ + " : " + answerSubmissions[i] + "\n";
         }
         
         return info;

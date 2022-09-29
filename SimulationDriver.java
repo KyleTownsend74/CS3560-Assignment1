@@ -41,27 +41,32 @@ public class SimulationDriver {
         }
 
         // Get output from voting service
+        System.out.println("+-------------------------------------------+\n");
+        System.out.println("Voting simulation for the following question:\n");
         System.out.println(voteService.getQuestionInfo());
+        System.out.println(voteService.getAnswerInfo());
+        System.out.println("Vote totals for each answer:\n");
         System.out.println(voteService.getSubmissionInfo());
+        System.out.println("+-------------------------------------------+\n");
     }
 
     public static void main(String[] args) {
 
         // Create single choice question with answers
         IQuestion singleQuestion = new SingleChoiceQuestion("Single Choice Question Text");
-        singleQuestion.addAnswer("A. Answer 1");
-        singleQuestion.addAnswer("B. Answer 2");
-        singleQuestion.addAnswer("C. Answer 3");
+        singleQuestion.addAnswer("Answer 1");
+        singleQuestion.addAnswer("Answer 2");
+        singleQuestion.addAnswer("Answer 3");
 
         runSimulation(singleQuestion);
 
         // Create multiple choice question with answers
         IQuestion multipleQuestion = new MultipleChoiceQuestion("Multiple Choice Question Text");
-        multipleQuestion.addAnswer("A. Answer 1");
-        multipleQuestion.addAnswer("B. Answer 2");
-        multipleQuestion.addAnswer("C. Answer 3");
-        multipleQuestion.addAnswer("D. Answer 4");
-        multipleQuestion.addAnswer("E. Answer 5");
+        multipleQuestion.addAnswer("Answer 1");
+        multipleQuestion.addAnswer("Answer 2");
+        multipleQuestion.addAnswer("Answer 3");
+        multipleQuestion.addAnswer("Answer 4");
+        multipleQuestion.addAnswer("Answer 5");
 
         runSimulation(multipleQuestion);
 

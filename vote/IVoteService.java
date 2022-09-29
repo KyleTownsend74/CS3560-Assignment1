@@ -9,6 +9,7 @@ public interface IVoteService {
     public IQuestion getCurQuestion();
     public boolean submitAnswer(IStudent student, int... answerNums);
     public String getQuestionInfo();
+    public String getAnswerInfo();
     public String getSubmissionInfo();
 
 }
